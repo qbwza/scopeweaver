@@ -24,35 +24,35 @@ SKIP_DIRS = {
 SOURCE_EXTS = {".rs", ".toml"}
 
 PATTERNS = {
-    "raw_account_info": re.compile(r"\\bAccountInfo\\s*<"),
-    "unchecked_account": re.compile(r"\\bUncheckedAccount\\s*<"),
-    "remaining_accounts": re.compile(r"\\bremaining_accounts\\b"),
-    "invoke": re.compile(r"(?<!_)\\binvoke\\s*\\("),
-    "invoke_signed": re.compile(r"\\binvoke_signed\\s*\\("),
-    "create_program_address": re.compile(r"\\bcreate_program_address\\s*\\("),
-    "find_program_address": re.compile(r"\\bfind_program_address\\s*\\("),
-    "pda_seeds": re.compile(r"\\bseeds\\s*="),
-    "pda_bump": re.compile(r"\\bbump\\b"),
-    "has_one_constraint": re.compile(r"\\bhas_one\\s*="),
-    "owner_constraint": re.compile(r"\\bowner\\s*="),
-    "address_constraint": re.compile(r"\\baddress\\s*="),
-    "signer_type": re.compile(r"\\bSigner\\s*<"),
-    "token_account": re.compile(r"\\bTokenAccount\\b"),
-    "interface_account": re.compile(r"\\bInterfaceAccount\\s*<"),
-    "token_interface": re.compile(r"\\bTokenInterface\\b|\\btoken_interface\\b"),
-    "token_2022": re.compile(r"\\bspl_token_2022\\b|\\bToken2022\\b|\\bTOKEN_2022_PROGRAM_ID\\b"),
-    "transfer_checked": re.compile(r"\\btransfer_checked\\b"),
-    "token_transfer": re.compile(r"\\btransfer\\s*\\("),
-    "oracle": re.compile(r"\\boracle\\b|\\bpyth\\b|\\bswitchboard\\b", re.IGNORECASE),
-    "stale": re.compile(r"\\bstale\\b|\\bstaleness\\b", re.IGNORECASE),
-    "confidence": re.compile(r"\\bconfidence\\b|\\bconf\\b", re.IGNORECASE),
-    "load_mut": re.compile(r"\\bload_mut\\s*\\("),
-    "unsafe": re.compile(r"\\bunsafe\\b"),
-    "unwrap": re.compile(r"\\.unwrap\\s*\\("),
-    "expect": re.compile(r"\\.expect\\s*\\("),
-    "checked_math": re.compile(r"\\bchecked_(?:add|sub|mul|div|pow|rem)\\b"),
-    "saturating_math": re.compile(r"\\bsaturating_(?:add|sub|mul|pow)\\b"),
-    "declare_id": re.compile(r'declare_id!\\s*\\(\\s*"([^"]+)"\\s*\\)'),
+    "raw_account_info": re.compile(r"\bAccountInfo\s*<"),
+    "unchecked_account": re.compile(r"\bUncheckedAccount\s*<"),
+    "remaining_accounts": re.compile(r"\bremaining_accounts\b"),
+    "invoke": re.compile(r"(?<!_)\binvoke\s*\("),
+    "invoke_signed": re.compile(r"\binvoke_signed\s*\("),
+    "create_program_address": re.compile(r"\bcreate_program_address\s*\("),
+    "find_program_address": re.compile(r"\bfind_program_address\s*\("),
+    "pda_seeds": re.compile(r"\bseeds\s*="),
+    "pda_bump": re.compile(r"\bbump\b"),
+    "has_one_constraint": re.compile(r"\bhas_one\s*="),
+    "owner_constraint": re.compile(r"\bowner\s*="),
+    "address_constraint": re.compile(r"\baddress\s*="),
+    "signer_type": re.compile(r"\bSigner\s*<"),
+    "token_account": re.compile(r"\bTokenAccount\b"),
+    "interface_account": re.compile(r"\bInterfaceAccount\s*<"),
+    "token_interface": re.compile(r"\bTokenInterface\b|\btoken_interface\b"),
+    "token_2022": re.compile(r"\bspl_token_2022\b|\bToken2022\b|\bTOKEN_2022_PROGRAM_ID\b"),
+    "transfer_checked": re.compile(r"\btransfer_checked\b"),
+    "token_transfer": re.compile(r"\btransfer\s*\("),
+    "oracle": re.compile(r"\boracle\b|\bpyth\b|\bswitchboard\b", re.IGNORECASE),
+    "stale": re.compile(r"\bstale\b|\bstaleness\b", re.IGNORECASE),
+    "confidence": re.compile(r"\bconfidence\b|\bconf\b", re.IGNORECASE),
+    "load_mut": re.compile(r"\bload_mut\s*\("),
+    "unsafe": re.compile(r"\bunsafe\b"),
+    "unwrap": re.compile(r"\.unwrap\s*\("),
+    "expect": re.compile(r"\.expect\s*\("),
+    "checked_math": re.compile(r"\bchecked_(?:add|sub|mul|div|pow|rem)\b"),
+    "saturating_math": re.compile(r"\bsaturating_(?:add|sub|mul|pow)\b"),
+    "declare_id": re.compile(r'declare_id!\s*\(\s*"([^"]+)"\s*\)'),
 }
 
 SIGNAL_LIMIT = 12
@@ -136,8 +136,8 @@ def parse_anchor_programs(root: Path) -> List[dict]:
 
     programs = []
     section = None
-    section_re = re.compile(r"^\\s*\\[programs\\.([^\\]]+)\\]\\s*$")
-    kv_re = re.compile(r'^\\s*([A-Za-z0-9_-]+)\\s*=\\s*"([^"]+)"\\s*$')
+    section_re = re.compile(r"^\s*\[programs\.([^\]]+)\]\s*$")
+    kv_re = re.compile(r'^\s*([A-Za-z0-9_-]+)\s*=\s*"([^"]+)"\s*$')
 
     try:
         lines = anchor.read_text(encoding="utf-8", errors="replace").splitlines()
@@ -172,7 +172,7 @@ def inspect_toolchain(root: Path) -> dict:
     if anchor and anchor.exists():
         text = anchor.read_text(encoding="utf-8", errors="replace")
         for key in ("anchor_version", "solana_version"):
-            m = re.search(rf'^\\s*{key}\\s*=\\s*"([^"]+)"', text, re.MULTILINE)
+            m = re.search(rf'^\s*{key}\s*=\s*"([^"]+)"', text, re.MULTILINE)
             if m:
                 result[key] = m.group(1)
 
@@ -180,7 +180,7 @@ def inspect_toolchain(root: Path) -> dict:
         text = cargo.read_text(encoding="utf-8", errors="replace")
         for dep in ("anchor-lang", "anchor-spl", "solana-program", "spl-token", "spl-token-2022"):
             m = re.search(
-                rf'^\\s*{re.escape(dep)}\\s*=\\s*(?:"([^"]+)"|\\{{[^\\n]*version\\s*=\\s*"([^"]+)")',
+                rf'^\s*{re.escape(dep)}\s*=\s*(?:"([^"]+)"|\{{[^\n]*version\s*=\s*"([^"]+)")',
                 text,
                 re.MULTILINE,
             )
